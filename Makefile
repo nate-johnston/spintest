@@ -25,7 +25,7 @@ contents: package
 	@rpm -ql --package $(PACKAGE)
 
 publish: package
-	curl -u "$(USER):$(PASSWORD)" -F "data=@$(PACKAGE)" https://hub.comcast.net/svc/api/v1/automation/noarch/7/
+	curl -s -u "$(USER):$(PASSWORD)" -F "data=@$(PACKAGE)" https://hub.comcast.net/svc/api/v1/automation/noarch/7/
 
 unpublish: package
-	curl -u "$(USER):$(PASSWORD)" -X DELETE  https://hub.comcast.net/svc/api/v1/automation/noarch/7/$(PACKAGE)
+	curl -s -u "$(USER):$(PASSWORD)" -X DELETE  https://hub.comcast.net/svc/api/v1/automation/noarch/7/$(PACKAGE)

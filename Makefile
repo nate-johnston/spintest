@@ -1,10 +1,10 @@
 NAME=spintest
 VERSION=1.0.0
 REVISION=0
-PREFIX=/app/support
-TARGET_DIR=src/app/support
+PREFIX=/app/nate-test
+TARGET_DIR=.
 PACKAGE=$(NAME)-$(VERSION)-$(REVISION).x86_64.rpm
-POSTINSTALL=support/postinstall.sh
+POSTINSTALL=postinstall.sh
 
 .PHONY: package
 
@@ -28,4 +28,7 @@ contents: package
 	@rpm -ql --package $(PACKAGE)
 
 publish: package
-	@curl -u $(USER) -F "data=@$(PACKAGE)" https://hub.comcast.net/svc/api/v1/automation/noarch/7/
+	@curl -u "$(USER):$(PASSWORD)" -F "data=@$(PACKAGE)" https://hub.comcast.net/svc/api/v1/automation/noarch/7/
+
+unpublish: package
+	@curl -u "$(USER):$(PASSWORD)" -X DELETE  https://hub.comcast.net/svc/api/v1/automation/noarch/7/$(PACKAGE)

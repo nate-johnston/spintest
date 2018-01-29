@@ -8,9 +8,6 @@ POSTINSTALL=postinstall.sh
 
 .PHONY: package
 
-prerequisites:
-	@yum -y update fpm
-
 clean:
 	@rm -f $(PACKAGE) || true
 

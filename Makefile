@@ -3,7 +3,7 @@ VERSION=1.0.0
 REVISION=0
 PREFIX=/app/nate-test
 TARGET_DIR=.
-PACKAGE=$(NAME)-$(VERSION)-$(REVISION).x86_64.rpm
+PACKAGE=$(NAME)_$(VERSION)-$(REVISION)_amd64.deb
 POSTINSTALL=postinstall.sh
 
 .PHONY: publish
@@ -19,4 +19,5 @@ package: clean
 	@fpm -s dir -t deb -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . | grep -v 'no value for epoch'
 
 publish: package
+	@ls -l
 	deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)

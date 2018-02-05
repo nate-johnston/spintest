@@ -6,7 +6,7 @@ TARGET_DIR=.
 PACKAGE=$(NAME)-$(VERSION)-$(REVISION).x86_64.rpm
 POSTINSTALL=postinstall.sh
 
-.PHONY: package
+.PHONY: publish
 
 clean:
 	@rm -f $(PACKAGE) || true
@@ -16,16 +16,7 @@ test:
 	@rspec
 
 package: clean
-	@fpm -s dir -t rpm -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . | grep -v 'no value for epoch'
-
-contents: package
-	@echo
-	@echo Contents of the delivered RPM
-	@echo ==============================
-	@rpm -ql --package $(PACKAGE)
+	@fpm -s dir -t deb -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . | grep -v 'no value for epoch'
 
 publish: package
-	curl -s -u "$(USER):$(PASSWORD)" -F "data=@$(PACKAGE)" https://hub.comcast.net/svc/api/v1/automation/noarch/7/
-
-unpublish: package
-	curl -s -u "$(USER):$(PASSWORD)" -X DELETE  https://hub.comcast.net/svc/api/v1/automation/noarch/7/$(PACKAGE)
+	deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)

@@ -16,7 +16,7 @@ test:
 	@rspec
 
 package: clean
-	@fpm -s dir -t deb -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . | grep -v 'no value for epoch'
+	@fpm -s dir -t deb -d nginx -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . 
 
 publish: package
 	#deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)

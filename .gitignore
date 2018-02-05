@@ -1,2 +1,3 @@
 # Ignore the package that gets created
 *.deb
+*.rpm

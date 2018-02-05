@@ -19,5 +19,4 @@ package: clean
 	@fpm -s dir -t deb -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . | grep -v 'no value for epoch'
 
 publish: package
-	@ls -l
-	deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)
+	#deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)

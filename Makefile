@@ -1,5 +1,5 @@
 NAME=spintest
-VERSION=1.0.2
+VERSION=1.0.3
 REVISION=0
 PREFIX=/app/nate-test
 TARGET_DIR=.
